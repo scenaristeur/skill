@@ -10,6 +10,7 @@ const loading = ref(true)
 const username = ref('')
 const website = ref('')
 const avatar_url = ref('')
+const opened = ref(true)
 
 onMounted(() => {
   getProfile()
@@ -77,7 +78,9 @@ async function signOut() {
 </script>
 
 <template>
-  <form class="form-widget" @submit.prevent="updateProfile">
+    <button @click="opened = !opened">
+    Compte</button>
+  <form v-if="opened"  class="form-widget" @submit.prevent="updateProfile">
     <Avatar v-model:path="avatar_url" @upload="updateProfile" size="10" />
     <div>
       <label for="email">Email</label>
