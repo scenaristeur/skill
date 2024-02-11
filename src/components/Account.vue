@@ -10,7 +10,7 @@ const loading = ref(true)
 const username = ref('')
 const website = ref('')
 const avatar_url = ref('')
-const opened = ref(true)
+const opened = ref(false)
 
 onMounted(() => {
   getProfile()

@@ -4,6 +4,7 @@ import Account from './components/Account.vue'
 import Auth from './components/Auth.vue'
 import Profiles from './components/Profiles.vue'
 import { supabase } from './supabase'
+import TodoList from './components/TodoList.vue'
 
 const session = ref()
 
@@ -22,6 +23,7 @@ onMounted(() => {
   <div class="container" style="padding: 50px 0 100px 0">
     <Account v-if="session" :session="session" />
     <Auth v-else />
+    <TodoList v-if="session" :session="session"/>
     <Profiles v-if="session" :session="session"/>
   </div>
 </template>
