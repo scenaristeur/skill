@@ -20,9 +20,13 @@ move .env-example to .env and adapt it
 
 
 
-## env
+## deploy
+- https://dev.to/dwtoledo/deploying-a-vite-app-on-github-pages-using-github-actions-with-github-secrets-1hn0
 
 ## source
 - start https://supabase.com/docs/guides/getting-started/tutorials/with-vue-3
 - gh + schema https://github.com/supabase/supabase/tree/master/examples/user-management/vue3-user-management#database-schema
 - vue-supabase https://github.com/supabase-community/vue-supabase 
+
+# redirect url 
+- https://supabase.com/docs/reference/javascript/auth-signinwithotp
