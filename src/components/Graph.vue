@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{  session  }}
         <div ref="graph" id="3d-graph"></div>
     </div>
 </template>
@@ -26,11 +25,20 @@ export default {
             .graphData(gData)
             .width(800)
             .height(600)
+            .nodeAutoColorBy("type")
+    },
+    watch: {
+        users() {
+            let nodes = this.users.map(user => ({id: user.id, name: user.username, type: "user"}))
+            this.graphData = {nodes: nodes, links: []}
+            
+            this.Graph.graphData(this.graphData)
+        }
     },
     computed: {
-    session() {
-      return this.$store.state.core.session
-    },
+    users() {
+            return this.$store.state.users.users
+        },
 }
 }
 </script>

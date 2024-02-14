@@ -32,9 +32,9 @@ const state = () => ({
 })
 
 const mutations = {
-//   setGalaxy(state, g){
-//     state.galaxy = g
-//   },
+  setSession(state, s){
+    state.session = s
+  },
 //   setIpfsNode(state, n){
 //     state.ipfsNode = n
 //   },

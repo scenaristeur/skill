@@ -1,6 +1,6 @@
 <template>
     <div v-if="loading == true">
-        ... Loading
+        ... Loading users
     </div>
     <div v-else>
         <h1>Users</h1>
@@ -21,59 +21,16 @@ export default {
     props: {
         session: Object
     },
-    data() {
-        return {
-            loading: false,
-            users: []
-        }
-    },
     async mounted() {
-        this.getUsers()
+        this.$store.dispatch('users/fetchUsers')
     },
-    methods: {
-        async getUsers() {
-            console.log("getUsers")
-            try {
-                this.loading = true
-                //const { user } = this.session
-
-                const { data, error, status } = await supabase
-                    .from('users')
-                    .select(`username, website, avatar_url`)
-                /*.eq('id', user.id)
-                .single()*/
-
-                if (error && status !== 406) throw error
-
-                if (data) {
-                    console.log(data)
-                    this.users = data
-                    /*.map(x=>{
-                        x.src = this.downloadImage(x.avatar_url)
-                    })*/
-                    /*     username.value = data.username
-                         website.value = data.website
-                         avatar_url.value = data.avatar_url */
-                }
-            } catch (error) {
-                alert(error.message)
-            } finally {
-                this.loading = false
-            }
+    computed: {
+        users() {
+            return this.$store.state.users.users
         },
-        async downloadImage(path) {
-            try {
-                const { data, error } = await supabase.storage.from('avatars').download(path)
-                if (error) throw error
-                let img_url = URL.createObjectURL(data)
-                console.log(img_url)
-                return img_url
-            } catch (error) {
-                console.error('Error downloading image: ', error.message)
-                return null
-            }
-        }
-
+        loading() {
+            return this.$store.state.users.loading
+        },
     }
 }
 
