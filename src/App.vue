@@ -4,6 +4,7 @@
     <Account v-if="session" :session="session" />
     <Auth v-else />
     <Graph v-if="session" :session="session" />
+    <MyInterests v-if="session"/>
     <TodoList v-if="session" :session="session" />
 
     <Users v-if="session" :session="session" />
@@ -19,6 +20,9 @@ import Users from './components/Users.vue'
 import { supabase } from './supabase'
 import TodoList from './components/TodoList.vue'
 import Graph from './components/Graph.vue'
+
+import MyInterests from './components/MyInterests.vue';
+
 export default {
   name: "App",
   components: {
@@ -26,7 +30,8 @@ export default {
     Auth,
     Users,
     TodoList,
-    Graph
+    Graph,
+    MyInterests
   },
   data() {
     return {

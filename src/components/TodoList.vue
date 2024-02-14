@@ -1,8 +1,8 @@
 <template>
     <div class="w-full">
-        <h1 class="mb-12 font-bold text-6xl">Interests.</h1>
+        <h1 class="mb-12 font-bold text-6xl">Todo list.</h1>
         <div class="flex gap-2 my-2">
-            <input v-model="task" class="rounded w-full p-2" type="text" placeholder="What are you interested in?"
+            <input v-model="task" class="rounded w-full p-2" type="text" placeholder="What are you thinking about?"
                 @keyup.enter="insertTask" />
             <button @click="insertTask" class="btn-black">
                 Add

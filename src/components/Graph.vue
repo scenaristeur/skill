@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ todos }}
+        <!-- {{ interests }} -->
         <div ref="graph" id="3d-graph"></div>
     </div>
 </template>
@@ -38,6 +38,8 @@ export default {
                 this.onNodeClick(node)
             })
         this.updateGraph()
+        this.$store.dispatch('interests/fetchInterests')
+
     },
     methods: {
         onNodeClick(node) {
@@ -63,9 +65,35 @@ export default {
   
 
             //  console.log("todos", this.todos) 
-            let todos = this.todos.filter(todo => todo.is_complete).map(todo => ({ id: todo.id, name: todo.task, type: "todo" }))
-            todos.forEach(todo => this.upsertNode( todo))
+            // let todos = this.todos.filter(todo => todo.is_complete).map(todo => ({ id: todo.id, name: todo.task, title: todo.task, type: "todo" }))
+            // todos.forEach(todo => this.upsertNode( todo))
   
+
+this.interests.filter(i=>i.active === true).forEach(i=>{
+    let user_id = i.user_id
+    let [interest_id, name] = Object.values(i.interests)
+    //console.log(i)
+    console.log(interest_id, name)
+//     for (const [id, name] of Object.entries(i.interests)) {
+//   console.log(`${user_id},${id}: ${name}`);
+   let interest = { id: interest_id, name: name, type: "interest"}
+       this.upsertNode( interest)
+       let link = {source: user_id,   name: "interest",   target: interest.id}
+       this.upsertLink(link)
+// }
+    // Object.entries(i.interests).forEach((id,name) => {
+    //     console.log(id,name)
+    //     let interest = { id: id, name: name, type: "interest"}
+    //       this.upsertNode( interest)
+    //     //let link = {source: user_id,   name: "interest",   target: interest.id}
+    //     // let int = { id: interest.id, name: interest.name, type: "interest"}
+    //     // console.log(int)
+      
+    // })
+})
+
+
+
             // this.nodes = this.nodes.map(obj => todos.find(o => o.id === obj.id) || obj);
             // console.log(this.nodes)
             // console.log("users", users, "todos", todos, "nodes", this.nodes, "links", this.links)
@@ -73,13 +101,13 @@ export default {
         },
         updateLinks() {
             this.links = []
-           let todos = this.todos.filter(todo => todo.is_complete).map(todo => ({ id: todo.id, name: todo.task, user_id: todo.user_id,type: "todo" }))
+        //    let todos = this.todos.filter(todo => todo.is_complete).map(todo => ({ id: todo.id, name: todo.task, user_id: todo.user_id,type: "todo" }))
 
-            todos.forEach(todo  => {
-                let link = {source: todo.user_id,   name: "interest",   target: todo.id}
-                console.log(link)
-                this.upsertLink( link)})
-            this.updateGraph()
+        //     todos.forEach(todo  => {
+        //         let link = {source: todo.user_id,   name: "interest",   target: todo.id}
+        //         console.log(link)
+        //         this.upsertLink( link)})
+        //     this.updateGraph()
         },
         updateGraph() {
         
@@ -91,11 +119,16 @@ export default {
             this.updateNodes()
            
         },
-        todos() {
+        // todos() {
+        //     this.updateNodes()
+        //     this.updateLinks()
+        //     // this.graphData = { nodes: nodes, links: [] }
+        //     // this.Graph.graphData(this.graphData)
+        // },
+        interests() {
             this.updateNodes()
             this.updateLinks()
-            // this.graphData = { nodes: nodes, links: [] }
-            // this.Graph.graphData(this.graphData)
+            
         }
     },
     computed: {
@@ -104,6 +137,15 @@ export default {
         },
         todos() {
             return this.$store.state.todos.todos
+        },
+        interests() {
+            return this.$store.state.interests.interests
+        },
+        myInterests() {
+            return this.$store.state.interests.myInterests
+        },
+        session() {
+            return this.$store.state.core.session
         }
     }
 }

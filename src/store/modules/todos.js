@@ -28,7 +28,8 @@ async fetchTodos(context) {
       return
     }
     context.commit('setTodos', todos)
-    return todos
+    return
+    //return todos
   } catch (err) {
     console.error('Error retrieving data from db', err)
   }
