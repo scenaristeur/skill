@@ -129,6 +129,11 @@ this.interests.filter(i=>i.active === true).forEach(i=>{
             this.updateNodes()
             this.updateLinks()
             
+        },
+        myInterests() {
+            this.updateNodes()
+            this.updateLinks()
+            
         }
     },
     computed: {

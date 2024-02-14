@@ -2,7 +2,7 @@ import { supabase } from "../../supabase";
 
 const state = () => ({
   interests: [],
-  myInterests: []
+  myInterests: [],
 });
 
 const mutations = {
@@ -15,46 +15,46 @@ const mutations = {
 };
 
 const actions = {
-    /**
+  /**
    * Retrieve all todo for the signed in user
    */
-    async fetchMyInterests(context) {
-      let session = context.rootState.core.session;
-      try {
-        const { data: myInterests, error } = await supabase
-          .from("users_interests")
-          .select(
-            `user_id,
+  async fetchMyInterests(context) {
+    let session = context.rootState.core.session;
+    try {
+      const { data: myInterests, error } = await supabase
+        .from("users_interests")
+        .select(
+          `user_id,
         interests(id, name),
         active`
-          )
-          .eq('user_id', session.user.id)
-        console.log("MyInterests", myInterests);
-        if (error) {
-          console.log("error", error);
-          return;
-        }
-        // handle for when no todos are returned
-        if (myInterests === null) {
-          context.commit("setMyInterests", []);
-          return;
-        }
-
-let mI = myInterests.map(i => {
-  return {
-    id: i.interests.id,
-    name: i.interests.name,
-    active: i.active,
-    user_id: i.user_id
-  }
-})
-console.log("mI",mI)
-        context.commit("setMyInterests", mI);
-        //return todos
-      } catch (err) {
-        console.error("Error retrieving data from db", err);
+        )
+        .eq("user_id", session.user.id);
+      console.log("MyInterests", myInterests);
+      if (error) {
+        console.log("error", error);
+        return;
       }
-    },
+      // handle for when no todos are returned
+      if (myInterests === null) {
+        context.commit("setMyInterests", []);
+        return;
+      }
+
+      let mI = myInterests.map((i) => {
+        return {
+          id: i.interests.id,
+          name: i.interests.name,
+          active: i.active,
+          user_id: i.user_id,
+        };
+      });
+      console.log("mI", mI);
+      context.commit("setMyInterests", mI);
+      //return todos
+    } catch (err) {
+      console.error("Error retrieving data from db", err);
+    }
+  },
   /**
    * Retrieve all todo for the signed in user
    */
@@ -87,40 +87,39 @@ console.log("mI",mI)
    *  Add a new todo to supabase
    */
   async addInterest(context, interest) {
-    console.log("inserting", interest)
+    console.log("inserting", interest);
     try {
-      let existing = null
+      let existing = null;
       let test_if_exist = await supabase
         .from("interests")
-        .select('*')
-        .eq("name", interest.name)
+        .select("*")
+        .eq("name", interest.name);
 
-      if (test_if_exist.data.length == 0){
-        let insert_interest= await supabase
-        .from("interests")
-        .insert({name:interest.name})
-        .single()
+      if (test_if_exist.data.length == 0) {
+        let insert_interest = await supabase
+          .from("interests")
+          .insert({ name: interest.name })
+          .single();
         console.log("created a new interest", insert_interest);
-
-   
       }
       let getinterest = await supabase
-      .from("interests")
-      .select('*')
-      .eq("name", interest.name)
+        .from("interests")
+        .select("*")
+        .eq("name", interest.name);
 
-      existing = getinterest.data[0]
+      existing = getinterest.data[0];
       console.log("existing", existing);
 
-      let insert_users_interests= await supabase
-      .from("users_interests")
-      .insert({user_id:interest.user_id, interest_id:existing.id, active:true})
-      .single()
+      let insert_users_interests = await supabase
+        .from("users_interests")
+        .insert({
+          user_id: interest.user_id,
+          interest_id: existing.id,
+          active: true,
+        })
+        .single();
 
-     
-
-        context.dispatch("fetchMyInterests");
-  
+      context.dispatch("fetchMyInterests");
     } catch (err) {
       alert("Error");
       console.error("Unknown problem inserting to db", err);
