@@ -1,12 +1,20 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { supabase } from '../../supabase'
 
+const state = () => ({
+    todos: []
+})
 
-const allTodos = []
-/**
+const mutations = {
+  setTodos(state, t){
+    state.todos = t
+  },
+}
+
+const actions = {
+  /**
  * Retrieve all todo for the signed in user
  */
-async function fetchTodos() {
+async fetchTodos(context) {
   try {
     const { data: todos, error } = await supabase.from('todos').select('*').order('id')
 
@@ -16,22 +24,19 @@ async function fetchTodos() {
     }
     // handle for when no todos are returned
     if (todos === null) {
-      allTodos.value = []
+      context.commit('setTodos', [])
       return
     }
-    // store response to allTodos
-    allTodos.value = todos
-    console.log('got todos!', allTodos.value)
+    context.commit('setTodos', todos)
     return todos
   } catch (err) {
     console.error('Error retrieving data from db', err)
   }
-}
-
+},
 /**
  *  Add a new todo to supabase
  */
-async function addTodo(todo){
+async addTodo(context, todo){
   try {
     const { data, error } = await supabase.from('todos').insert(todo).single()
 
@@ -42,18 +47,21 @@ async function addTodo(todo){
     }
 
     console.log('created a new todo', data)
+    context.dispatch('fetchTodos')
     return data
   } catch (err) {
     alert('Error')
     console.error('Unknown problem inserting to db', err)
     return null
   }
-}
-
+},
 /**
  * Targets a specific todo via its record id and updates the is_completed attribute.
  */
-async function updateTaskCompletion(todo, isCompleted) {
+async updateTaskCompletion( context,data) {
+ 
+  const {todo, isCompleted} = data
+  console.log(data, todo, isCompleted)
   try {
     const { error } = await supabase
       .from('todos')
@@ -68,22 +76,30 @@ async function updateTaskCompletion(todo, isCompleted) {
     }
 
     console.log('Updated task', todo.id)
+    context.dispatch('fetchTodos')
   } catch (err) {
     alert('Error')
     console.error('Unknown problem updating record', err)
   }
-}
+},
 
 /**
  *  Deletes a todo via its id
  */
-async function deleteTodo(todo) {
+async  deleteTodo(context,todo) {
   try {
     await supabase.from('todos').delete().eq('id', todo.id)
     console.log('deleted todo', todo.id)
+    context.dispatch('fetchTodos')
   } catch (error) {
     console.error('error', error)
   }
 }
+}
 
-export { allTodos, fetchTodos, addTodo, updateTaskCompletion, deleteTodo }
+export default {
+  namespaced: true,
+  state,
+  actions,
+  mutations
+}

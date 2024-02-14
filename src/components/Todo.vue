@@ -36,10 +36,6 @@
   </template>
   
   <script >
-
-  import { updateTaskCompletion, deleteTodo } from './vueutils/useTodo'
-  import { allTodos } from './vueutils/useTodo'
-  
   export default {
     name: 'Todo',
     props: {
@@ -48,36 +44,16 @@
         required: true,
       },
     },
-    created() {
-      this.allTodos = allTodos
-      console.log("allTodos in Todo.vue", this.allTodos)
-    },
     methods:{
         async clearTodo() {
-        await deleteTodo(this.todo)
-       /* .then(() => {
-          allTodos.value = allTodos.value.filter(todo => todo.id != props.todo.id)
-        })*/
-        this.$emit('update')
+        this.$store.dispatch('todos/deleteTodo', this.todo)
       },
       async updateTaskCompletion() {
         let is_complete = !this.todo['is_complete']
-       await  updateTaskCompletion(this.todo, is_complete)
-        this.$emit('update')
+      this.$store.dispatch('todos/updateTaskCompletion', { todo: this.todo, isCompleted: is_complete })
       }
     }
-  /*  setup(props) {
-      // Removes todo from supbase and also from app state
-      function clearTodo() {
-        deleteTodo(props.todo).then(() => {
-          allTodos.value = allTodos.value.filter(todo => todo.id != props.todo.id)
-        })
-      }
-  
-      return { updateTaskCompletion, clearTodo }
-    },*/
   }
   </script>
   
-  <style lang="scss" scoped></style>
   

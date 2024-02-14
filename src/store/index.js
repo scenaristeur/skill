@@ -1,6 +1,7 @@
 //import Vue from 'vue'
 import Vuex from 'vuex'
 import core from './modules/core'
+import todos from './modules/todos'
 
 
 export default new Vuex.Store({
@@ -13,6 +14,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    core
+    core, todos
   }
 })
