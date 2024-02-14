@@ -13,16 +13,16 @@ const avatar_url = ref('')
 const opened = ref(false)
 
 onMounted(() => {
-  getProfile()
+  getUser()
 })
 
-async function getProfile() {
+async function getUser() {
   try {
     loading.value = true
     const { user } = session.value
 
     const { data, error, status } = await supabase
-      .from('profiles')
+      .from('users')
       .select(`username, website, avatar_url`)
       .eq('id', user.id)
       .single()
@@ -41,7 +41,7 @@ async function getProfile() {
   }
 }
 
-async function updateProfile() {
+async function updateUser() {
   try {
     loading.value = true
     const { user } = session.value
@@ -54,7 +54,7 @@ async function updateProfile() {
       updated_at: new Date(),
     }
 
-    const { error } = await supabase.from('profiles').upsert(updates)
+    const { error } = await supabase.from('users').upsert(updates)
 
     if (error) throw error
   } catch (error) {
@@ -80,8 +80,8 @@ async function signOut() {
 <template>
     <button @click="opened = !opened">
     Compte</button>
-  <form v-if="opened"  class="form-widget" @submit.prevent="updateProfile">
-    <Avatar v-model:path="avatar_url" @upload="updateProfile" size="10" />
+  <form v-if="opened"  class="form-widget" @submit.prevent="updateUser">
+    <Avatar v-model:path="avatar_url" @upload="updateUser" size="10" />
     <div>
       <label for="email">Email</label>
       <input id="email" type="text" :value="session.user.email" disabled />

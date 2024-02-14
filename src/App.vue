@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import Account from './components/Account.vue'
 import Auth from './components/Auth.vue'
-import Profiles from './components/Profiles.vue'
+import Users from './components/Users.vue'
 import { supabase } from './supabase'
 import TodoList from './components/TodoList.vue'
 import Graph from './components/Graph.vue'
@@ -26,7 +26,7 @@ onMounted(() => {
     <Auth v-else />
     <Graph v-if="session" :session="session"/>
     <TodoList v-if="session" :session="session"/>
-    <Profiles v-if="session" :session="session"/>
+    <Users v-if="session" :session="session"/>
 
   </div>
 </template>

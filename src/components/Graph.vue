@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{  session  }}
         <div ref="graph" id="3d-graph"></div>
     </div>
 </template>
@@ -25,7 +26,12 @@ export default {
             .graphData(gData)
             .width(800)
             .height(600)
-    }
+    },
+    computed: {
+    session() {
+      return this.$store.state.core.session
+    },
+}
 }
 </script>
 

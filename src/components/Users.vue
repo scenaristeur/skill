@@ -3,12 +3,12 @@
         ... Loading
     </div>
     <div v-else>
-        <h1>Profiles</h1>
-        <div v-for="profile in profiles" :key="profile.id">
-            <h2>{{ profile.username }}</h2>
-            <p>{{ profile.website }}</p>
-            <!--<img :src="profile.avatar_url" alt="Avatar" />
-            {{profile}}-->
+        <h1>Users</h1>
+        <div v-for="user in users" :key="user.id">
+            <h2>{{ user.username }}</h2>
+            <p>{{ user.website }}</p>
+            <!--<img :src="user.avatar_url" alt="Avatar" />
+            {{user}}-->
         </div>
     </div>
 </template>
@@ -17,28 +17,28 @@
 <script>
 import { supabase } from '../supabase'
 export default {
-    name: "Profiles",
+    name: "Users",
     props: {
         session: Object
     },
     data() {
         return {
             loading: false,
-            profiles: []
+            users: []
         }
     },
     async mounted() {
-        this.getProfiles()
+        this.getUsers()
     },
     methods: {
-        async getProfiles() {
-            console.log("getProfiles")
+        async getUsers() {
+            console.log("getUsers")
             try {
                 this.loading = true
                 //const { user } = this.session
 
                 const { data, error, status } = await supabase
-                    .from('profiles')
+                    .from('users')
                     .select(`username, website, avatar_url`)
                 /*.eq('id', user.id)
                 .single()*/
@@ -47,7 +47,7 @@ export default {
 
                 if (data) {
                     console.log(data)
-                    this.profiles = data
+                    this.users = data
                     /*.map(x=>{
                         x.src = this.downloadImage(x.avatar_url)
                     })*/
