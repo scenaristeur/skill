@@ -23,7 +23,7 @@ const actions = {
 
         const { data, error, status } = await supabase
             .from('users')
-            .select(`username, website, avatar_url`)
+            .select(`id, username, website, avatar_url`)
         /*.eq('id', user.id)
         .single()*/
 
