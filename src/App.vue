@@ -3,11 +3,13 @@
 
     <Account v-if="session" :session="session" />
     <Auth v-else />
+    <Location v-if="session" :session="session" />
     <Graph v-if="session" :session="session" />
     <MyInterests v-if="session"/>
     <TodoList v-if="session" :session="session" />
 
     <Users v-if="session" :session="session" />
+    
 
   </div>
 </template>
@@ -20,6 +22,7 @@ import Users from './components/Users.vue'
 import { supabase } from './supabase'
 import TodoList from './components/TodoList.vue'
 import Graph from './components/Graph.vue'
+import Location from './components/Location.vue'
 
 import MyInterests from './components/MyInterests.vue';
 
@@ -31,7 +34,8 @@ export default {
     Users,
     TodoList,
     Graph,
-    MyInterests
+    MyInterests,
+    Location
   },
   data() {
     return {

@@ -60,3 +60,6 @@ create policy "Individuals can delete their own todos." on todos for
 
 # utf-8 emoji html
 - https://www.iemoji.com/view/emoji/1069/objects/wastebasket
+
+# supabase geolocation
+- https://supabase.com/docs/guides/database/extensions/postgis?language=js

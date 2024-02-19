@@ -4,6 +4,7 @@ import core from './modules/core'
 import todos from './modules/todos'
 import users from './modules/users'
 import interests from './modules/interests'
+import locations from './modules/locations'
 
 
 export default new Vuex.Store({
@@ -16,6 +17,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    core, todos, users, interests
+    core, todos, users, interests, locations
   }
 })
