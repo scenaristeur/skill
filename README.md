@@ -63,3 +63,6 @@ create policy "Individuals can delete their own todos." on todos for
 
 # supabase geolocation
 - https://supabase.com/docs/guides/database/extensions/postgis?language=js
+
+# latitude 45.0
+# longitude 4.85
