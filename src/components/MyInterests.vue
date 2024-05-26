@@ -9,12 +9,12 @@
             </button>
         </div>
 
-        <div class="bg-white shadow overflow-hidden rounded-md">
+        <div class="bg-black shadow overflow-hidden rounded-md">
             <!-- {{  myInterests }} -->
-            <ul v-for="(myInterest, index) in myInterests" :key="index">
+            <ul  >
                <!-- {{  myInterest}} -->
                 <!-- <Todo :todo="todo" /> -->
-                <Interest :interest="myInterest" />
+                <Interest :interest="myInterest" v-for="(myInterest, index) in myInterests" :key="index"/>
             </ul>
         </div>
     </div>

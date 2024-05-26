@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@supabase/supabase-js": "^2.39.3",
     "3d-force-graph": "^1.73.2",
+    "bootstrap": "^5.3.3",
+    "bootswatch": "^5.3.3",
     "vite-plugin-pwa": "^0.19.0",
     "vue": "^3.4.15",
     "vuex": "^4.1.0"

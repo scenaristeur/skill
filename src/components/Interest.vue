@@ -18,7 +18,7 @@
           <div class="text-sm leading-5 font-medium truncate">{{ interest.name}}</div>
         </div>
 
-        <button @click="clearTodo" class="w-4 h-4 ml-2 border-2 hover:border-black rounded">
+        <button @click="clearInterest" class="w-4 h-4 ml-2 border-2 hover:border-black rounded">
           <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="gray" aria-label="delete">
             <path
               fillRule="evenodd"

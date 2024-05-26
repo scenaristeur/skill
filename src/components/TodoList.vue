@@ -9,7 +9,7 @@
             </button>
         </div>
 
-        <div class="bg-white shadow overflow-hidden rounded-md">
+        <div class="bg-black shadow overflow-hidden rounded-md">
             <ul v-for="(todo, index) in todos" :key="index">
                 <Todo :todo="todo" />
             </ul>
