@@ -1,6 +1,10 @@
 <template>
   <div class="container" style="padding: 50px 0 100px 0">
 
+
+<Quests/>
+
+
     <Account v-if="session" :session="session" />
     <Auth v-else />
     <Location v-if="session" :session="session" />
@@ -23,6 +27,7 @@ import { supabase } from './supabase'
 import TodoList from './components/TodoList.vue'
 import Graph from './components/Graph.vue'
 import Location from './components/Location.vue'
+import Quests from './components/Quests.vue'
 
 import MyInterests from './components/MyInterests.vue';
 
@@ -35,7 +40,8 @@ export default {
     TodoList,
     Graph,
     MyInterests,
-    Location
+    Location,
+    Quests
   },
   data() {
     return {
